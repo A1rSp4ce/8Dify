@@ -8,8 +8,8 @@ from customtkinter import CTkFont as font
 from PIL import Image
 from PIL import ImageTk
 import webcolors
-from audiogeneration import generate_8D_Audio
 from tkinter.filedialog import askopenfilename
+import audiogeneration
 
 freq_8D = 0.075
 amount_8D=100
@@ -20,6 +20,7 @@ reverb_dry_level=0.4
 reverb_width= 1.0
 
 def hex_to_rgb(hex):
+  
   return tuple(int(hex[i:i+2], 16) for i in (0, 2, 4))
 
 def lerp(a: float, b: float, t: float) -> float:
@@ -247,6 +248,10 @@ width_label.place(relx=0.21, rely=((0.456*1.35)*1.25)*1.16,anchor='n')
 width_value = customtkinter.CTkLabel(master=settings_reverb_panel, width=20, height=20, text="1", font=values_text)
 width_value.place(relx=0.93, rely=((0.44955*1.35)*1.25)*1.16,anchor='n')
 
+def gen_audio():
+    audiogeneration.generate_8D_Audio(audiofile=audiofile, freq_8D=freq_8D, amount_8D=amount_8D, reverb_room_size=reverb_room_size, reverb_damping=reverb_damping, reverb_wet_level=reverb_wet_level, reverb_dry_level=reverb_dry_level, reverb_width=reverb_width, trimmed_file=trimmed_name_audio_file)
+    file_info_button_label.configure(text=f'Generated 8Dified {trimmed_name_audio_file}!') 
+    
 generate_button = customtkinter.CTkButton(app, width=500, height=50,
                                                  fg_color="#239144",
                                                  border_color= "#34eb6b",
@@ -255,16 +260,14 @@ generate_button = customtkinter.CTkButton(app, width=500, height=50,
                                                  corner_radius=10,
                                                  bg_color=app_bg_color,
                                                  text= "Generate Audio!",
-                                                 font=font_6, command=lambda: generate_8D_Audio(audiofile=audiofile, freq_8D=freq_8D, amount_8D=amount_8D, reverb_room_size=reverb_room_size, reverb_damping=reverb_damping, reverb_wet_level=reverb_wet_level, reverb_dry_level=reverb_dry_level, reverb_width=reverb_width, trimmed_file=trimmed_name_audio_file))
+                                                 font=font_6, command=lambda: gen_audio())
+
 
 
 generate_button.place(relx=0.5, rely=0.93,anchor='center')
 #Window Icon
-iconpath = ImageTk.PhotoImage(file='8DifyAppLogo.jpg')
+iconpath = ImageTk.PhotoImage(file='8DifyAppLogo.jpg', master=app)
 app.wm_iconbitmap()
 app.iconphoto(True, iconpath)
-
-app.wm_iconbitmap()
-app.after(300, lambda: app.iconphoto(True, iconpath))
 app.mainloop()
 

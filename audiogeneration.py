@@ -1,6 +1,6 @@
 import os
-import time
 import wave
+import time
 from gensound import WAV
 from gensound.curve import SineCurve
 from gensound import Pan
@@ -8,7 +8,7 @@ from gensound import Gain
 from pedalboard import Reverb, Pedalboard
 from pedalboard.io import AudioFile
 import subprocess
-import EightDifytkinter
+
 
 def generate_8D_Audio(audiofile, trimmed_file, freq_8D=0.075, amount_8D=100, reverb_room_size=0.1, reverb_damping=0, reverb_wet_level=0.33, reverb_dry_level=0.4, reverb_width=1):
 
@@ -57,6 +57,6 @@ def generate_8D_Audio(audiofile, trimmed_file, freq_8D=0.075, amount_8D=100, rev
                 o.write(effected)
 
     #Remove original 8D audio file
-    EightDifytkinter.file_info_button_label.configure(text=f'Generated 8Dified {trimmed_file}!') 
+    time.sleep(1)
     os.remove('Initial8D audiofile.wav')
-    os.remove('converted.wav')
+    
